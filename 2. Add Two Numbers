@@ -1,0 +1,55 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    long long num1 = 0, num2 = 0, sum;
+
+    while (l1 != NULL) {
+        num1 = num1 * 10 + l1->val;
+        l1 = l1->next;
+    }
+
+    while (l2 != NULL) {
+        num2 = num2 * 10 + l2->val;
+        l2 = l2->next;
+    }
+    
+    sum = num1 + num2;
+
+    if (sum == 0) {
+        struct ListNode *a = (struct ListNode*)malloc(sizeof(struct ListNode));
+        if (a == NULL) {
+            return NULL;
+        }
+        a->val = 0;
+        a->next = NULL;
+        return a;
+    }
+    
+    struct ListNode *result = NULL; 
+    struct ListNode *end = NULL;
+
+    while (sum != 0) {
+        int digit = sum % 10;
+        struct ListNode *new = (struct ListNode*)malloc(sizeof(struct ListNode));
+        if (new == NULL) {
+            return NULL;
+        }
+        new->val = digit;
+        new->next = NULL;
+        
+        if (result == NULL) {
+            result = new; 
+        }
+        else {
+            end->next = new;
+        }
+        end = new;
+        sum /= 10;
+    }
+    return result;
+}
